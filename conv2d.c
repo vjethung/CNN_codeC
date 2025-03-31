@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// Struct definitions similar to C++ version
 typedef struct {
     int batch_size;
     int channels;
@@ -19,7 +18,6 @@ typedef struct {
     float* bias;
 } conv2d_params;
 
-// Conv2d class replacement
 typedef struct {
     conv2d_shape in_shape, out_shape;
     kernel_shape kernel_sh;
@@ -29,7 +27,6 @@ typedef struct {
     bool use_bias;
 } Conv2d;
 
-// Function to initialize Conv2d (replacement for constructor)
 void Conv2d_init(Conv2d* conv, conv2d_shape in_shape, int output_channels, 
                  kernel_shape kernel_sh, conv2d_params params, 
                  int stride[2], int padding[2], bool use_bias) 
@@ -180,7 +177,6 @@ float* Conv2d_reverse(Conv2d* conv) {
         reversed_weight[i] = conv->params.weight[size - 1 - i];
     }
     return reversed_weight;
-    // Note: In C, the caller is responsible for freeing the returned memory
 }
 
 void readDataFromFile(const char *filename, float* *input) {
@@ -190,20 +186,16 @@ void readDataFromFile(const char *filename, float* *input) {
         return;
     }
     
-    // First, count how many values in the file
     int size = 0;
     float value;
     while (fscanf(file, "%f", &value) == 1) {
         size++;
     }
     
-    // Reset file pointer to beginning
     rewind(file);
     
-    // Allocate memory for input
     *input = (float*)malloc(size * sizeof(float));
     
-    // Read values into the array
     for (int i = 0; i < size; i++) {
         if (fscanf(file, "%f", &(*input)[i]) != 1) {
             break;
