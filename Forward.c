@@ -73,4 +73,3 @@ void maxPooling2D(float* input, float* output, conv2d_shape in_shape, int* strid
         }
     }
 }
-
